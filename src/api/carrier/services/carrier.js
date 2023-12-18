@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * provider service
+ * carrier service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::provider.provider');
+module.exports = createCoreService('api::carrier.carrier');

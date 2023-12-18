@@ -7,7 +7,9 @@ module.exports =  ({ env }) => ({
 			database: env('DATABASE_NAME', 'shiptrack-strapi'),
 			user: env('DATABASE_USERNAME', 'shiptrack-strapi'),
 			password: env('DATABASE_PASSWORD', 'shiptrack-strapi'),
-			ssl: env.bool('DATABASE_SSL', false)
+			ssl: {
+				rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+			},
 		}
 	}
 });

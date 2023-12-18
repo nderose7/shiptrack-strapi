@@ -33,14 +33,33 @@ module.exports = {
    * @returns {Promise<Object>} - The shipment object with label.
    */
   async buyShipmentLabel(shipmentId, rateId) {
-    try {
-      const shipment = await easyPostClient.Shipment.retrieve(shipmentId);
-      await shipment.buy({ rate: { id: rateId } });
-      return shipment;
-    } catch (error) {
-      throw new Error('Error buying shipment label: ' + error.message);
-    }
+      console.log("Attempting to buy label");
+      try {
+          console.log("Shipment ID: ", shipmentId);
+          console.log("Rate ID: ", rateId);
+          //const shipment = await easyPostClient.Shipment.retrieve(shipmentId);
+          //console.log("Shipment: ", shipment)
+          /*if (!shipment.buy) {
+              throw new Error('Retrieved object does not have a buy method');
+          }*/
+          console.log("Rate ID for service: ", rateId);
+
+          // Call the buy method on the shipment object
+          const boughtShipment = await easyPostClient.Shipment.buy(shipmentId, rateId);
+          //await shipment.buy({ rate: { id: rateId } });
+          console.log("boughtShipment: ", boughtShipment)
+          return boughtShipment;
+      } catch (error) {
+          console.error("Label Error code:", error.code);
+          console.error("Label Error message:", error.message);
+          if (error.detail) {
+              console.error("Label Error details:", error.detail);
+          }
+          throw error;
+      }
   },
+
+
 
   /**
    * Track a shipment.

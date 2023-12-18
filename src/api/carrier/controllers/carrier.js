@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * provider controller
+ * carrier controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::provider.provider');
+module.exports = createCoreController('api::carrier.carrier');

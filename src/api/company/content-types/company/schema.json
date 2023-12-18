@@ -31,6 +31,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::product.product"
+    },
+    "carriers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::carrier.carrier",
+      "mappedBy": "company"
     }
   }
 }

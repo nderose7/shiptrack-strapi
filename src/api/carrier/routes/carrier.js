@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * provider router
+ * carrier router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::provider.provider');
+module.exports = createCoreRouter('api::carrier.carrier');

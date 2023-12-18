@@ -36,16 +36,19 @@
       "relation": "oneToOne",
       "target": "api::company.company"
     },
-    "provider": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::provider.provider"
-    },
     "shippingOption": {
       "type": "string"
     },
     "cost": {
       "type": "decimal"
+    },
+    "carrier": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::carrier.carrier"
+    },
+    "sentBy": {
+      "type": "string"
     }
   }
 }

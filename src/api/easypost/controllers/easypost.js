@@ -31,6 +31,7 @@ module.exports = {
     try {
       const { shipmentId } = ctx.params;
       const { rateId } = ctx.request.body;
+      console.log("rate id: ", rateId)
       const shipment = await strapi.service('api::easypost.easypost').buyShipmentLabel(shipmentId, rateId);
       return ctx.send(shipment);
     } catch (error) {
