@@ -18,10 +18,10 @@ module.exports = createCoreRouter('api::company.company', {
       middlewares: ['global::multi-owner'],
     },
     update: {
-      policies: ['global::is-owner']
+      policies: ['global::is-admin']
     },
     delete: {
-      policies: ['global::is-owner']
+      policies: ['global::is-admin']
     }
   }
 });

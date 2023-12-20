@@ -87,5 +87,35 @@ module.exports = {
     } catch (error) {
       throw new Error('Error retrieving shipment: ' + error.message);
     }
-  }
+  },
+
+
+  async createEasyPostCarrierAccount(carrierDetails) {
+
+    try {
+      const carrierAccount = await easyPostClient.CarrierAccount.create({
+        type: carrierDetails.type, // e.g., 'DhlEcsAccount'
+        description: carrierDetails.description,
+        credentials: {
+          client_id: carrierDetails.credentials.client_id,
+          client_secret: carrierDetails.credentials.client_secret,
+          distribution_center: carrierDetails.credentials.distribution_center,
+          pickup_id: carrierDetails.credentials.pickup_id,
+          // ... other necessary credential fields
+        },
+        test_credentials: {
+          client_id: carrierDetails.test_credentials.client_id,
+          client_secret: carrierDetails.test_credentials.client_secret,
+          distribution_center: carrierDetails.test_credentials.distribution_center,
+          pickup_id: carrierDetails.test_credentials.pickup_id,
+          // ... other necessary test credential fields
+        },
+      });
+
+      return carrierAccount;
+    } catch (error) {
+      console.error('Error creating carrier account with EasyPost:', error);
+      throw error;
+    }
+  },
 };

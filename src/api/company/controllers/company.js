@@ -26,6 +26,7 @@ module.exports = createCoreController('api::company.company',
   },
   
   async update(ctx){
+    console.log("Attempting update...")
     ctx.query.filters = {
         ...(ctx.query.filters || {}),
         users: ctx.state.user.id

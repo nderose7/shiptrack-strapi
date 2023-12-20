@@ -71,11 +71,61 @@
       "target": "api::company.company",
       "inversedBy": "users"
     },
-    "fullName": {
-      "type": "string"
-    },
     "admin": {
       "type": "boolean"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "defaultOriginAddress": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "jobTitle": {
+      "type": "string"
+    },
+    "companyAdmin": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "admins"
+    },
+    "street1": {
+      "type": "string"
+    },
+    "street2": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "subPostalCode": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "subpremise": {
+      "type": "string"
     }
   }
 }
