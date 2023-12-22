@@ -1,6 +1,23 @@
 'use strict';
 
 module.exports = {
+
+  /**
+   * Controller to create a child user in EasyPost.
+   * @param {Object} ctx - The request context.
+   * @returns {Object} - The response object.
+   */
+  async createChildUser(ctx) {
+    try {
+      const { name = '' } = ctx.request.body;
+      const childUser = await strapi.service('api::easypost.easypost').createChildUser(name);
+      ctx.body = childUser;
+    } catch (error) {
+      ctx.badRequest('Unable to create child user', { error });
+    }
+  },
+
+
   /**
    * Create a shipment and retrieve shipping rates.
    *
@@ -70,4 +87,60 @@ module.exports = {
       return ctx.badRequest('Error retrieving shipment', { error: error.message });
     }
   },
+
+  addCarrierAccount: async (ctx) => {
+    try {
+      const userId = ctx.params.userId;
+      const carrierDetails = ctx.request.body;
+      
+      // Use EasyPost API to create/link the carrier account
+      const easypostAccount = await strapi.service('api::easypost.easypost').createEasyPostCarrierAccount(carrierDetails);
+
+      // Save details in Strapi
+      const savedAccount = await strapi.service('api::carrier.carrier').create({
+        easypostAccountId: easypostAccount.id,
+        userId,
+        ...carrierDetails,
+      });
+
+      ctx.send({ message: 'Carrier account added successfully', savedAccount });
+    } catch (error) {
+      ctx.throw(500, error.message);
+    }
+  },
+
+  addCarrierAccountUPS: async (ctx) => {
+    try {
+      const companyId = ctx.params.companyId;
+      //console.log("Params: ", companyId);
+
+      const carrierDetails = ctx.request.body;
+      const easypostAccount = await strapi.service('api::easypost.easypost').createEasyPostCarrierAccountUPS(carrierDetails);
+
+      const savedAccount = await strapi.service('api::carrier.carrier').create({
+        data: {
+          //easypostAccountId: easypostAccount.id,
+          company: { connect: [companyId] },
+          accountId: carrierDetails.account_number,
+          name: 'UPS',
+        }
+      });
+
+      ctx.send({ message: 'Carrier account added successfully', savedAccount });
+
+    } catch (error) {
+      console.error('Error occurred:', error); // Log the error for debugging
+
+      // Check if the error object has 'errors' array and send it along
+      const errorResponse = {
+        message: 'Error adding carrier account',
+        error: error.message,
+        details: error.errors || []
+      };
+      ctx.send(errorResponse);
+      ctx.response.status = error.statusCode || 500; // Use the error's status or default to 500
+      
+    }
+  }
+
 };

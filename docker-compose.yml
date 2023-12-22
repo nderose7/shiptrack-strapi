@@ -49,19 +49,28 @@ services:
       - '5432:5432'
     networks:
       - shiptrack-strapi
-      
-  shiptrack-strapiAdminer:
-    container_name: shiptrack-strapiAdminer
-    image: adminer
-    restart: unless-stopped
+
+  mailhog:
+    image: mailhog/mailhog
     ports:
-      - '9090:8080'
-    environment:
-      - ADMINER_DEFAULT_SERVER=shiptrack-strapiDB
+      - "8025:8025" # Web interface
+      - "1025:1025" # SMTP server
     networks:
       - shiptrack-strapi
-    depends_on:
-      - shiptrack-strapiDB
+
+  #   
+  #shiptrack-strapiAdminer:
+  #  container_name: shiptrack-strapiAdminer
+  #  image: adminer
+  #  restart: unless-stopped
+  #  ports:
+  #    - '9090:8080'
+  #  environment:
+  #    - ADMINER_DEFAULT_SERVER=shiptrack-strapiDB
+  #  networks:
+  #    - shiptrack-strapi
+  #  depends_on:
+  #    - shiptrack-strapiDB
 
 volumes:
   shiptrack-strapi-data:

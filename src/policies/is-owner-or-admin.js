@@ -17,11 +17,11 @@ module.exports = async (policyContext, config, { strapi }) => {
     console.log("Route action is find")
     // Logic for list access
     // Fetch all shipments
-        const { results: shipments } = await service.find({
+    const { results: shipments } = await service.find({
       populate: { 
         owner: true, 
         company: { 
-          populate: { users: true } 
+          populate: ["users", "admins"]
         } 
       }
     });
@@ -32,10 +32,12 @@ module.exports = async (policyContext, config, { strapi }) => {
     const accessibleShipments = shipments.filter(shipment => {
       const isOwner = shipment.owner && shipment.owner.id === ctx.state.user.id;
       const isAdmin = shipment.company && shipment.company.users.some(user => user.id === ctx.state.user.id && user.admin);
-      console.log("Is owner? ", isOwner)
-      console.log("Is admin? ", isAdmin)
+      //console.log("Is owner? ", isOwner)
+      //console.log("Is admin? ", isAdmin)
       return isOwner || isAdmin;
     });
+
+    console.log("Acc Shipments: ", accessibleShipments)
 
     // IMPORTANT: Check if the filtered list is empty
     if (accessibleShipments.length === 0) {
@@ -43,7 +45,8 @@ module.exports = async (policyContext, config, { strapi }) => {
     }
 
     // Modify ctx.body to return only accessible shipments
-    ctx.body = { data: accessibleShipments, meta: { /* include relevant meta data here */ } };
+    //ctx.body = { data: accessibleShipments, meta: { /* include relevant meta data here */ } };
+    ctx.state.filteredShipments = accessibleShipments;
     return true;
   } else {
     // Assuming this is for actions like 'findOne', 'update', or 'delete'
@@ -56,7 +59,15 @@ module.exports = async (policyContext, config, { strapi }) => {
 
     const isOwner = shipment.owner && shipment.owner.id === ctx.state.user.id;
     const isAdmin = shipment.company && shipment.company.users.some(user => user.id === ctx.state.user.id && user.admin);
-    return isOwner || isAdmin; // Allow access if user is owner or admin
+
+    if (isOwner || isAdmin) {
+      // Set the filteredShipment in the context state
+      ctx.state.filteredShipment = shipment;
+      return true; // Allow access
+    } else {
+      return false; // Deny access if not owner or admin
+    }
   }
+
 };
 

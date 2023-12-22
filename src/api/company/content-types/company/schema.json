@@ -27,11 +27,6 @@
       "target": "plugin::users-permissions.user",
       "mappedBy": "company"
     },
-    "products": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product.product"
-    },
     "carriers": {
       "type": "relation",
       "relation": "oneToMany",
@@ -79,6 +74,12 @@
     },
     "subpremise": {
       "type": "string"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "company"
     }
   }
 }

@@ -23,6 +23,9 @@
       "relation": "manyToOne",
       "target": "api::company.company",
       "inversedBy": "carriers"
+    },
+    "easypostAccountId": {
+      "type": "string"
     }
   }
 }

@@ -5,6 +5,33 @@ const apiKey = process.env.EASYPOST_API_KEY; // Store your API key in an environ
 const easyPostClient = new EasyPost(apiKey);
 
 module.exports = {
+
+  /**
+   * Create a child user.
+   * @returns {Promise<Object>} - The created child user object.
+   */
+  async createChildUser(name = '') {
+    try {
+      const userParams = {};
+      if (name) userParams.name = name;
+
+      console.log("Userparams: ", userParams)
+
+      const childUser = await easyPostClient.User.create(name);
+
+      return childUser;
+    } catch (error) {
+      console.error("Error code:", error.code);
+      console.error("Error message:", error.message);
+      if (error.detail) {
+        console.error("Error details:", error.detail);
+      }
+      throw error;
+    }
+  },
+
+
+
   /**
    * Create a shipment and retrieve shipping rates.
    * @param {Object} shipmentDetails - Details of the shipment including addresses and parcel info.
@@ -118,4 +145,49 @@ module.exports = {
       throw error;
     }
   },
+
+  async createEasyPostCarrierAccountUPS(carrierDetails) {
+    try {
+      console.log('Carrier Details:', carrierDetails); // Log the carrier details for verification
+
+      console.log("Account ID: ", carrierDetails.account_number)
+
+      const carrierAccount = await easyPostClient.CarrierAccount.create({
+        type: 'UpsAccount', // Specify UPS account type
+        description: 'UPS Account',
+        reference: 'Strapi Company ID: ' + carrierDetails.companyId, // Replace with an actual reference if necessary
+        registration_data: {
+          account_number: carrierDetails.account_number,
+          city: carrierDetails.city,
+          company: carrierDetails.company,
+          country: carrierDetails.country,
+          email: carrierDetails.email,
+          name: carrierDetails.name,
+          phone: carrierDetails.phone,
+          postal_code: carrierDetails.postal_code,
+          state: carrierDetails.state,
+          street1: carrierDetails.street1,
+          title: carrierDetails.title,
+          website: carrierDetails.website,
+        },
+      });
+
+      return carrierAccount;
+    } catch (error) {
+      console.error('Request:', carrierDetails); // Log the request details
+      if (error.response) {
+        // Log the full response from the API if available
+        console.error('API Response:', error.response);
+      } else {
+        // Log the error message
+        console.error('Error:', error);
+        //console.error('Error:', error.code, error.message);
+      }
+      throw error;
+    }
+  },
+
+  
+
+
 };

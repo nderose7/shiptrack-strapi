@@ -7,6 +7,7 @@
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::company.company',
+
 ({
   strapi
 }) => ({
@@ -23,6 +24,16 @@ module.exports = createCoreController('api::company.company',
       }
     }
     return await super.find(ctx);
+  },
+
+  async findOne(ctx){
+    console.log("Attempting findOne...")
+    ctx.query.filters = {
+        ...(ctx.query.filters || {}),
+        users: ctx.state.user.id
+    };
+
+    return await super.findOne(ctx);
   },
   
   async update(ctx){

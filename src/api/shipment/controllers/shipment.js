@@ -1,44 +1,28 @@
-'use strict';
+// path: /api/shipment/controllers/shipment.js
 
-/**
- * shipment controller
- */
+'use strict';
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::shipment.shipment',
-({
-  strapi
-}) => ({
+module.exports = createCoreController('api::shipment.shipment', ({ strapi }) =>  ({
+  // Extend the default find method
   async find(ctx) {
-    const { filters } = ctx.query
-    ctx.query = {
-      ...ctx.query,
-      populate: "*",
-      
+    console.log('Custom find method in shipment controller');
+
+    // Check if filteredShipments exist in the state
+    if (ctx.state.filteredShipments) {
+      console.log('Using filtered shipments from policy');
+      // Return the filtered shipments
+      console.log(ctx.state.filteredShipments);
+      return { data: ctx.state.filteredShipments, meta: {/* meta data */} };
     }
-    return await super.find(ctx);
-  },
-  
-  async update(ctx){
-    ctx.query.filters = {
-        ...(ctx.query.filters || {}),
-        owner: ctx.state.user.id
-    };
 
-    return await super.update(ctx);
-  },
-  async delete(ctx){
-    ctx.query.filters = {
-        ...(ctx.query.filters || {}),
-        owner: ctx.state.user.id
-    };
-
-    return await super.delete(ctx);
-  },
-  
-  async create(ctx) {
-    console.log('Creating App!')
-    return await super.create(ctx);
+    // Otherwise, proceed with the default behavior
+    const { data, meta } = await super.find(ctx);
+    console.log('Shipments data:', data);
+    return { data, meta };
   }
+
+
+  // You can similarly override other methods if needed
 }));

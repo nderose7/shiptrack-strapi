@@ -126,6 +126,29 @@
     },
     "subpremise": {
       "type": "string"
+    },
+    "stripeCustomerId": {
+      "type": "string"
+    },
+    "apiTestKey": {
+      "type": "customField",
+      "options": {
+        "hint": null
+      },
+      "customField": "plugin::encryptable-field.encryptable-field"
+    },
+    "apiProdKey": {
+      "type": "customField",
+      "options": {
+        "hint": null
+      },
+      "customField": "plugin::encryptable-field.encryptable-field"
+    },
+    "easyPostUserId": {
+      "type": "string"
+    },
+    "easyPostParentId": {
+      "type": "string"
     }
   }
 }

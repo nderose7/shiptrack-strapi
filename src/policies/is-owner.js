@@ -14,7 +14,7 @@ module.exports = async (policyContext, config, {
   const {
     results: [content]
   } = await service.find({
-    filters: {
+    where: {
       id: {
         $eq: ctx.params.id
       },
@@ -22,7 +22,7 @@ module.exports = async (policyContext, config, {
         $contains: ctx.state.user.id
       }
     },
-    publicationState: 'preview'
+    //publicationState: 'preview'
   })
 
   return !!content

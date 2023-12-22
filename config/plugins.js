@@ -33,4 +33,7 @@ module.exports = ({ env }) => ({
       },
     },
   },
+  'encryptable-field': {
+    enabled: true,
+  },
 })

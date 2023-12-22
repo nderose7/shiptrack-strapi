@@ -4,7 +4,17 @@ module.exports = {
   routes: [
     {
       method: 'POST',
-      path: '/shipments',
+      path: '/create-child-user',
+      handler: 'easypost.createChildUser',
+      config: {
+        policies: [],
+        middlewares: [],
+        description: 'Create easypost child user.',
+      },
+    },
+    {
+      method: 'POST',
+      path: '/create-shipment',
       handler: 'easypost.createShipment',
       config: {
         policies: [],
@@ -14,7 +24,7 @@ module.exports = {
     },
     {
       method: 'POST',
-      path: '/shipments/:shipmentId/buy-label',
+      path: '/create-shipment/:shipmentId/buy-label',
       handler: 'easypost.buyShipmentLabel',
       config: {
         policies: [],
@@ -34,7 +44,7 @@ module.exports = {
     },
     {
       method: 'GET',
-      path: '/shipments/:shipmentId',
+      path: '/retrieve-shipment/:shipmentId',
       handler: 'easypost.retrieveShipment',
       config: {
         policies: [],
@@ -42,5 +52,16 @@ module.exports = {
         description: 'Retrieve details of a specific shipment',
       },
     },
+    {
+      method: 'POST',
+      path: '/add-carrier-ups/:companyId',
+      handler: 'easypost.addCarrierAccountUPS',
+      config: {
+        policies: [],
+        middlewares: [],
+        description: 'Connect UPS carrier account.',
+      },
+    },
+
   ],
 };
