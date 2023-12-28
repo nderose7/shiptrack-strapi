@@ -49,6 +49,81 @@
     },
     "sentBy": {
       "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "toCity": {
+      "type": "string"
+    },
+    "toCountry": {
+      "type": "string"
+    },
+    "toEmail": {
+      "type": "string"
+    },
+    "toName": {
+      "type": "string"
+    },
+    "toPhone": {
+      "type": "string"
+    },
+    "toZip": {
+      "type": "string"
+    },
+    "toState": {
+      "type": "string"
+    },
+    "toStreet1": {
+      "type": "string"
+    },
+    "fromCity": {
+      "type": "string"
+    },
+    "fromCountry": {
+      "type": "string"
+    },
+    "fromEmail": {
+      "type": "string"
+    },
+    "fromName": {
+      "type": "string"
+    },
+    "fromPhone": {
+      "type": "string"
+    },
+    "fromZip": {
+      "type": "string"
+    },
+    "fromState": {
+      "type": "string"
+    },
+    "fromStreet1": {
+      "type": "string"
+    },
+    "length": {
+      "type": "decimal"
+    },
+    "width": {
+      "type": "decimal"
+    },
+    "height": {
+      "type": "decimal"
+    },
+    "weight": {
+      "type": "decimal"
+    },
+    "carrierName": {
+      "type": "string"
+    },
+    "carrierService": {
+      "type": "string"
+    },
+    "deliveryDays": {
+      "type": "integer"
+    },
+    "easyPostId": {
+      "type": "string"
     }
   }
 }

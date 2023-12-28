@@ -20,6 +20,7 @@ module.exports = async (policyContext, config, { strapi }) => {
     const { results: shipments } = await service.find({
       populate: { 
         owner: true, 
+        product: true,
         company: { 
           populate: ["users", "admins"]
         } 
@@ -52,10 +53,18 @@ module.exports = async (policyContext, config, { strapi }) => {
     // Assuming this is for actions like 'findOne', 'update', or 'delete'
     const { results: [shipment] } = await service.find({
       filters: { id: { $eq: recordId } },
-      populate: ['owner', 'company']
+      populate: { 
+        owner: true, 
+        product: true,
+        company: { 
+          populate: ["users", "admins"]
+        } 
+      }
     });
 
     if (!shipment) return false; // No shipment found
+
+    console.log(shipment.company.users)
 
     const isOwner = shipment.owner && shipment.owner.id === ctx.state.user.id;
     const isAdmin = shipment.company && shipment.company.users.some(user => user.id === ctx.state.user.id && user.admin);

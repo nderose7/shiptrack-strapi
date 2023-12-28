@@ -149,6 +149,9 @@
     },
     "easyPostParentId": {
       "type": "string"
+    },
+    "useCompanyNameForOrigin": {
+      "type": "boolean"
     }
   }
 }

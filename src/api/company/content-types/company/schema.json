@@ -80,6 +80,12 @@
       "relation": "oneToMany",
       "target": "api::product.product",
       "mappedBy": "company"
+    },
+    "addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address",
+      "mappedBy": "company"
     }
   }
 }
