@@ -1,7 +1,7 @@
 
 
 module.exports = async (policyContext, config, { strapi }) => {
-  console.log("Attempting is-owner-or-admin policy...");
+  //console.log("Attempting is-owner-or-admin policy...");
   const ctx = policyContext;
   if (!ctx.state.isAuthenticated) return false;
   
@@ -23,11 +23,12 @@ module.exports = async (policyContext, config, { strapi }) => {
         product: true,
         company: { 
           populate: ["users", "admins"]
-        } 
-      }
+        }
+      },
+      sort: { id: 'desc' }
     });
 
-    console.log("Shipments: ", shipments)
+    //console.log("Shipments: ", shipments)
 
     // Filter shipments based on user's access
     const accessibleShipments = shipments.filter(shipment => {
@@ -38,7 +39,7 @@ module.exports = async (policyContext, config, { strapi }) => {
       return isOwner || isAdmin;
     });
 
-    console.log("Acc Shipments: ", accessibleShipments)
+    //console.log("Acc Shipments: ", accessibleShipments)
 
     // IMPORTANT: Check if the filtered list is empty
     if (accessibleShipments.length === 0) {
@@ -58,13 +59,13 @@ module.exports = async (policyContext, config, { strapi }) => {
         product: true,
         company: { 
           populate: ["users", "admins"]
-        } 
+        }
       }
     });
 
     if (!shipment) return false; // No shipment found
 
-    console.log(shipment.company.users)
+    //console.log(shipment.company.users)
 
     const isOwner = shipment.owner && shipment.owner.id === ctx.state.user.id;
     const isAdmin = shipment.company && shipment.company.users.some(user => user.id === ctx.state.user.id && user.admin);
